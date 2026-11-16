@@ -1,3 +1,3 @@
-Feedback - Aula 02 e Aula 03
+# Feedback - Aula 02 e Aula 03
 
-Emanuel, na aula 2 você não entregou, só ficou o commit inicial, nota 0,00. Na aula 3 você fez um commit chamando de aula 3, mas o servidor continua sendo o mesmo da aula 2, com erro de rota por causa de espaço sobrando no caminho. Não é uma entrega de aula 3 de verdade, ficou 0,00 também. Está devendo as duas.
+Emanuel, o seu servidor.js ainda tem o bug que o próprio material da aula avisa pra não cair: as rotas estão escritas com espaço dentro, tipo '/ treinos ', que não funciona igual '/treinos'. Isso é sinal de que você copiou de PDF ou de IA em vez de digitar, e por isso quebra. Você tem um teste-banco.js certo, mas ele nunca foi usado dentro do servidor.js. Preciso lançar a nota até sexta-feira, corrige o servidor.js digitando certo e migra pro banco até lá.
