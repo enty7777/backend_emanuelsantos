@@ -1,92 +1,22 @@
-### ============================================================
-### testes.http - o contrato da API
-### ============================================================
-### Abra este arquivo no VS Code com a extensao REST Client e
-### clique em "Send Request" em cada bloco.
-### Voce terminou a aula quando TODAS responderem o status certo.
-### ============================================================
-
-@url = http://localhost:3000
+### 13 - Contar quantidade de treinos
+GET {{url}}/treinos/total
 
 
-### 1 - Listar todos os treinos            -> espera 200 e um array
-GET {{url}}/treinos
+### 14 - Filtrar treinos com duração mínima de 40 minutos
+GET {{url}}/treinos?minimo=40
 
 
-### 2 - Criar um treino                    -> espera 201
-POST {{url}}/treinos
-Content-Type: application/json
-
-{
-    "nome": "Peito e triceps",
-    "duracao": 60
-}
+### 15 - Buscar treinos pelo nome
+GET {{url}}/treinos?busca=peito
 
 
-### 3 - Criar outro treino                 -> espera 201
-POST {{url}}/treinos
-Content-Type: application/json
-
-{
-    "nome": "Costas e biceps",
-    "duracao": 45
-}
+### 16 - Filtrar e buscar ao mesmo tempo
+GET {{url}}/treinos?minimo=40&busca=peito
 
 
-### 4 - Buscar o treino 1                  -> espera 200
-GET {{url}}/treinos/1
+### 17 - Resumo dos treinos
+GET {{url}}/treinos/resumo
 
 
-### 5 - Buscar um treino que nao existe    -> espera 404
-GET {{url}}/treinos/99999
-
-
-### 6 - Criar sem o nome                   -> espera 400
-POST {{url}}/treinos
-Content-Type: application/json
-
-{
-    "duracao": 30
-}
-
-
-### 7 - Criar com duracao invalida         -> espera 400
-POST {{url}}/treinos
-Content-Type: application/json
-
-{
-    "nome": "Corrida",
-    "duracao": -5
-}
-
-
-### 8 - Alterar o treino 1                 -> espera 200
-PUT {{url}}/treinos/1
-Content-Type: application/json
-
-{
-    "nome": "Peito, triceps e ombro",
-    "duracao": 75
-}
-
-
-### 9 - Alterar um treino que nao existe   -> espera 404
-PUT {{url}}/treinos/99999
-Content-Type: application/json
-
-{
-    "nome": "Qualquer",
-    "duracao": 10
-}
-
-
-### 10 - Apagar o treino 2                 -> espera 204 (sem corpo)
-DELETE {{url}}/treinos/2
-
-
-### 11 - Apagar um treino que nao existe   -> espera 404
-DELETE {{url}}/treinos/99999
-
-
-### 12 - Listar de novo pra conferir       -> espera 200
-GET {{url}}/treinos
+### 18 - ID inválido
+GET {{url}}/treinos/abc
