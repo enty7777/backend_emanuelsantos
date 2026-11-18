@@ -1,8 +1,12 @@
-const repository = require('../repositories/usuariosRepository.js');
+const bcrypt = require('bcrypt');
 
-function login(usuario, senha) {
+const repository =
+    require('../repositories/usuariosRepository.js');
 
-    const encontrado = repository.buscarPorUsuario(usuario);
+async function login(usuario, senha) {
+
+    const encontrado =
+        repository.buscarPorUsuario(usuario);
 
     if (encontrado === undefined) {
         return {
@@ -10,7 +14,13 @@ function login(usuario, senha) {
         };
     }
 
-    if (encontrado.senha !== senha) {
+    const confere =
+        await bcrypt.compare(
+            senha,
+            encontrado.senha_hash
+        );
+
+    if (!confere) {
         return {
             invalido: true
         };
