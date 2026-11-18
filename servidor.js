@@ -1,78 +1,72 @@
-const service = require('../services/treinosService.js');
+const express = require('express');
 
-function listar(req, res) {
-    const treinos = service.listarTodos();
+const treinosController =
+    require('./controllers/treinosController.js');
 
-    res.status(200).json(treinos);
-}
+const authController =
+    require('./controllers/authController.js');
 
-function buscarUm(req, res) {
-    const id = Number(req.params.id);
+const app = express();
 
-    const treino = service.buscarPorId(id);
+app.use(express.json());
 
-    if (treino === undefined) {
-        return res.status(404).json({
-            erro: 'Treino nao encontrado.'
-        });
-    }
 
-    res.status(200).json(treino);
-}
+// ==========================
+// TREINOS
+// ==========================
 
-function criar(req, res) {
-    const resultado = service.criarTreino(req.body);
+app.get(
+    '/treinos',
+    treinosController.listar
+);
 
-    if (resultado.erro !== undefined) {
-        return res.status(400).json({
-            erro: resultado.erro
-        });
-    }
+app.get(
+    '/treinos/:id',
+    treinosController.buscarUm
+);
 
-    res.status(201).json(resultado.treino);
-}
+app.post(
+    '/treinos',
+    treinosController.criar
+);
 
-function atualizar(req, res) {
-    const id = Number(req.params.id);
+app.put(
+    '/treinos/:id',
+    treinosController.atualizar
+);
 
-    const resultado = service.atualizarTreino(
-        id,
-        req.body
+app.delete(
+    '/treinos/:id',
+    treinosController.remover
+);
+
+
+// ==========================
+// AUTENTICAÇÃO
+// ==========================
+
+app.post(
+    '/login',
+    authController.login
+);
+
+app.get(
+    '/perfil',
+    authController.perfil
+);
+
+app.post(
+    '/logout',
+    authController.logout
+);
+
+
+const PORTA = 3000;
+
+app.listen(PORTA, () => {
+
+    console.log(
+        `Servidor rodando em http://localhost:${PORTA}`
     );
 
-    if (resultado.naoEncontrado === true) {
-        return res.status(404).json({
-            erro: 'Treino nao encontrado.'
-        });
-    }
-
-    if (resultado.erro !== undefined) {
-        return res.status(400).json({
-            erro: resultado.erro
-        });
-    }
-
-    res.status(200).json(resultado.treino);
-}
-
-function remover(req, res) {
-    const id = Number(req.params.id);
-
-    const resultado = service.removerTreino(id);
-
-    if (resultado.naoEncontrado === true) {
-        return res.status(404).json({
-            erro: 'Treino nao encontrado.'
-        });
-    }
-
-    res.status(204).end();
-}
-
-module.exports = {
-    listar,
-    buscarUm,
-    criar,
-    atualizar,
-    remover
-};
+});
